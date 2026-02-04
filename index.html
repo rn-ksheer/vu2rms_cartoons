@@ -7,15 +7,29 @@
 <style>
 body{margin:0;background:#000;color:white;font-family:Arial;text-align:center;}
 h1{margin:15px 0;}
-#viewer{display:inline-block;margin:auto;padding:0;border:none;}
-#viewer img{max-width:90vw;max-height:70vh;display:block;margin:auto;border:4px solid white;border-radius:10px;}
-.controls{margin:15px;}
+#viewer{display:inline-block;margin:auto;padding:0;border:none;width:100%;text-align:center;}
+#viewer img{max-width:95vw;max-height:60vh;display:block;margin:auto;border:4px solid white;border-radius:10px;}
+.controls{margin:12px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;} button{padding:10px 16px;font-size:16px;}
 button{padding:8px 14px;border:none;border-radius:6px;background:#333;color:white;cursor:pointer;margin:0 5px;}
 button:hover{background:#555;}
-.thumbs{display:flex;overflow-x:auto;gap:8px;justify-content:center;padding:10px;}
-.thumbs img{height:90px;border:2px solid #666;border-radius:6px;cursor:pointer;opacity:.6;}
+.thumbs{display:flex;overflow-x:auto;gap:8px;justify-content:flex-start;padding:8px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;} .thumbs::-webkit-scrollbar{height:6px;}
+.thumbs img{height:70px;min-width:110px;object-fit:cover;border:2px solid #666;border-radius:6px;cursor:pointer;opacity:.6;}
 .thumbs img.active{border-color:#ffcc00;opacity:1;}
 .fade{animation:fade 1s ease-in-out;}@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (max-width: 600px){
+  h1{font-size:20px;}
+  #viewer img{max-height:55vh;}
+  /* Two-row thumbnail grid instead of scroll strip */
+  .thumbs{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(90px,1fr));
+    grid-auto-rows:70px;
+    gap:6px;
+    padding:8px;
+    overflow:visible;
+  }
+  .thumbs img{height:70px;min-width:auto;width:100%;}
+}
 </style>
 </head>
 <body>
@@ -42,6 +56,15 @@ function show(n){i=n;main.classList.add('fade');main.src=`./images/img${String(i
 Array.from(thumbs.children).forEach((c,idx)=>c.classList.toggle('active',idx+1===i));}
 function next(){show(i%total+1);}function prev(){show((i-2+total)%total+1);}function togglePlay(){if(timer){clearInterval(timer);timer=null;document.getElementById('playBtn').textContent='▶ Play';}else{timer=setInterval(next,3000);document.getElementById('playBtn').textContent='⏸ Pause';}}
 show(1);
+// Auto full-screen on tap (mobile-friendly)
+main.addEventListener('click', async ()=>{
+  const el = document.documentElement;
+  if (!document.fullscreenElement) {
+    try { await el.requestFullscreen(); } catch(e) {}
+  } else {
+    try { await document.exitFullscreen(); } catch(e) {}
+  }
+});
 </script>
 </body>
 </html>
