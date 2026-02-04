@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartoons by VU2RMS</title>
+<style>
+body{margin:0;background:#000;color:white;font-family:Arial;text-align:center;}
+h1{margin:15px 0;}
+#viewer{display:inline-block;margin:auto;padding:0;border:none;}
+#viewer img{max-width:90vw;max-height:70vh;display:block;margin:auto;border:4px solid white;border-radius:10px;}
+.controls{margin:15px;}
+button{padding:8px 14px;border:none;border-radius:6px;background:#333;color:white;cursor:pointer;margin:0 5px;}
+button:hover{background:#555;}
+.thumbs{display:flex;overflow-x:auto;gap:8px;justify-content:center;padding:10px;}
+.thumbs img{height:90px;border:2px solid #666;border-radius:6px;cursor:pointer;opacity:.6;}
+.thumbs img.active{border-color:#ffcc00;opacity:1;}
+.fade{animation:fade 1s ease-in-out;}@keyframes fade{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+<h1>Cartoons by VU2RMS</h1>
+<div id="viewer"><img id="mainImg" src="./images/img01.jpg"></div>
+<div class="controls">
+<button onclick="prev()">◀ Prev</button>
+<button onclick="togglePlay()" id="playBtn">▶ Play</button>
+<button onclick="next()">Next ▶</button>
+</div>
+<div class="thumbs" id="thumbs"></div>
+<script>
+const total=30;
+let i=1, timer=null;
+const main=document.getElementById('mainImg');
+const thumbs=document.getElementById('thumbs');
+for(let k=1;k<=total;k++){
+  const t=document.createElement('img');
+  t.src=`./images/img${String(k).padStart(2,'0')}.jpg`;
+  t.onclick=()=>show(k);
+  thumbs.appendChild(t);
+}
+function show(n){i=n;main.classList.add('fade');main.src=`./images/img${String(i).padStart(2,'0')}.jpg`;setTimeout(()=>main.classList.remove('fade'),1000);
+Array.from(thumbs.children).forEach((c,idx)=>c.classList.toggle('active',idx+1===i));}
+function next(){show(i%total+1);}function prev(){show((i-2+total)%total+1);}function togglePlay(){if(timer){clearInterval(timer);timer=null;document.getElementById('playBtn').textContent='▶ Play';}else{timer=setInterval(next,3000);document.getElementById('playBtn').textContent='⏸ Pause';}}
+show(1);
+</script>
+</body>
+</html>
