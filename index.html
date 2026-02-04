@@ -39,6 +39,7 @@ button:hover{background:#555;}
 <button onclick="prev()">◀ Prev</button>
 <button onclick="togglePlay()" id="playBtn">▶ Play</button>
 <button onclick="next()">Next ▶</button>
+<button onclick="toggleFullscreen()" id="fsBtn">⛶ Full screen</button>
 </div>
 <div class="thumbs" id="thumbs"></div>
 <script>
@@ -56,15 +57,14 @@ function show(n){i=n;main.classList.add('fade');main.src=`./images/img${String(i
 Array.from(thumbs.children).forEach((c,idx)=>c.classList.toggle('active',idx+1===i));}
 function next(){show(i%total+1);}function prev(){show((i-2+total)%total+1);}function togglePlay(){if(timer){clearInterval(timer);timer=null;document.getElementById('playBtn').textContent='▶ Play';}else{timer=setInterval(next,3000);document.getElementById('playBtn').textContent='⏸ Pause';}}
 show(1);
-// Auto full-screen on tap (mobile-friendly)
-main.addEventListener('click', async ()=>{
+function toggleFullscreen(){
   const el = document.documentElement;
   if (!document.fullscreenElement) {
-    try { await el.requestFullscreen(); } catch(e) {}
+    el.requestFullscreen().catch(()=>{});
+    document.getElementById('fsBtn').textContent='⤢ Exit full screen';
   } else {
-    try { await document.exitFullscreen(); } catch(e) {}
+    document.exitFullscreen().catch(()=>{});
+    document.getElementById('fsBtn').textContent='⛶ Full screen';
   }
-});
+}
 </script>
-</body>
-</html>
