@@ -65,4 +65,4 @@ The gallery automatically displays the latest image first.
 
 ---
 
-📡 73 de VU3 Charlie Quebec Mike
+📡 73 de VU3 C-Q-Mike
