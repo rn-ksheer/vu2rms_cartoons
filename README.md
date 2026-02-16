@@ -1,14 +1,21 @@
 # 📡 HamToons by VU2RMS – Weekly Update
 
+![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?style=for-the-badge&logo=github)
+![Updates](https://img.shields.io/badge/Weekly%20Updates-Active-blue?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Online-success?style=for-the-badge)
+
 A weekly updated cartoon gallery maintained by **VU2RMS**.
 
-🎨 Featuring amateur radio themed cartoons and creative ham content.
+🎨 Amateur radio themed cartoons  
+📻 Creative ham humour  
+🖼 Updated every week  
 
 ---
 
 ## 🔗 Live Gallery
 
-👉 https://rn-ksheer.github.io/vu2rms_cartoons/
+👉 **View Here:**  
+https://rn-ksheer.github.io/vu2rms_cartoons/
 
 ---
 
@@ -25,27 +32,36 @@ A weekly updated cartoon gallery maintained by **VU2RMS**.
 
 ## 🚀 How It Works
 
-- Images are stored inside the `/images` folder.
-- Naming format:
+Images are stored inside the `/images` folder.
 
-  ```
-  img01.jpg
-  img02.jpg
-  ...
-  img54.jpg
-  ```
+Naming format:
 
-- The gallery automatically displays the latest image first.
+```
+img01.jpg
+img02.jpg
+...
+img54.jpg
+```
+
+The gallery automatically displays the latest image first.
 
 ---
 
 ## 🔄 Weekly Update Process
 
-1. Add new image to the `/images` folder  
-2. Follow naming sequence (`img55.jpg`, `img56.jpg`, etc.)
+1. Add new image to `/images`
+2. Follow naming sequence (`img55.jpg`, etc.)
 3. Update the `total` value inside the script
-4. Commit and push changes to GitHub
+4. Commit & push to GitHub
 5. GitHub Pages auto-deploys 🚀
+
+---
+
+## 📊 Project Status
+
+🟢 Actively Maintained  
+📆 Weekly Cartoon Updates  
+📡 Amateur Radio Community Project  
 
 ---
 
