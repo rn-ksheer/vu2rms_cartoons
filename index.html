@@ -3,23 +3,101 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cartoons by VU2RMS</title>
+<title>HamToons by VU2RMS</title>
+
 <style>
-body{margin:0;background:#000;color:white;font-family:Arial;text-align:center;}
+body{
+  margin:0;
+  background:#000;
+  color:white;
+  font-family:Arial;
+  text-align:center;
+}
+
 h1{margin:15px 0;}
-#viewer{display:inline-block;margin:auto;padding:0;border:none;width:100%;text-align:center;}
-#viewer img{max-width:95vw;max-height:60vh;display:block;margin:auto;border:4px solid white;border-radius:10px;}
-.controls{margin:12px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;} button{padding:10px 16px;font-size:16px;}
-button{padding:8px 14px;border:none;border-radius:6px;background:#333;color:white;cursor:pointer;margin:0 5px;}
+
+#viewer{
+  display:inline-block;
+  width:100%;
+  text-align:center;
+}
+
+#viewer img{
+  max-width:95vw;
+  max-height:60vh;
+  display:block;
+  margin:auto;
+  border:4px solid white;
+  border-radius:10px;
+  transition:transform 0.6s ease, opacity 0.6s ease;
+}
+
+.controls{
+  margin:12px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+button{
+  padding:10px 16px;
+  border:none;
+  border-radius:6px;
+  background:#333;
+  color:white;
+  cursor:pointer;
+}
+
 button:hover{background:#555;}
-.thumbs{display:flex;overflow-x:auto;gap:8px;justify-content:flex-start;padding:8px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;} .thumbs::-webkit-scrollbar{height:6px;}
-.thumbs img{height:70px;min-width:110px;object-fit:cover;border:2px solid #666;border-radius:6px;cursor:pointer;opacity:.6;}
-.thumbs img.active{border-color:#ffcc00;opacity:1;}
-.fade{animation:fade 1s ease-in-out;}@keyframes fade{from{opacity:0}to{opacity:1}}
-@media (max-width: 600px){
+
+.thumbs{
+  display:flex;
+  overflow-x:auto;
+  gap:8px;
+  justify-content:flex-start;
+  padding:8px;
+  scroll-behavior:smooth;
+}
+
+.thumbs img{
+  height:70px;
+  min-width:110px;
+  object-fit:cover;
+  border:2px solid #666;
+  border-radius:6px;
+  cursor:pointer;
+  opacity:.6;
+  transition:transform 0.3s ease;
+}
+
+.thumbs img.active{
+  border-color:#ffcc00;
+  opacity:1;
+  transform:scale(1.08);
+}
+
+/* Zoom animation */
+.zoom{
+  animation:zoomFade 0.6s ease;
+}
+
+@keyframes zoomFade{
+  from{
+    opacity:0;
+    transform:scale(1.08);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+/* Mobile layout */
+@media (max-width:600px){
   h1{font-size:20px;}
   #viewer img{max-height:55vh;}
-  /* Two-row thumbnail grid instead of scroll strip */
+
   .thumbs{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(90px,1fr));
@@ -28,38 +106,89 @@ button:hover{background:#555;}
     padding:8px;
     overflow:visible;
   }
-  .thumbs img{height:70px;min-width:auto;width:100%;}
+
+  .thumbs img{
+    height:70px;
+    min-width:auto;
+    width:100%;
+  }
 }
 </style>
 </head>
+
 <body>
-<h1>Cartoons by VU2RMS</h1>
-<div id="viewer"><img id="mainImg" src="./images/img01.jpg"></div>
+
+<h1>HamToons by VU2RMS</h1>
+
+<div id="viewer">
+  <img id="mainImg" src="./images/img54.jpg">
+</div>
+
 <div class="controls">
 <button onclick="prev()">◀ Prev</button>
 <button onclick="togglePlay()" id="playBtn">▶ Play</button>
 <button onclick="next()">Next ▶</button>
 <button onclick="toggleFullscreen()" id="fsBtn">⛶ Full screen</button>
 </div>
+
 <div class="thumbs" id="thumbs"></div>
+
 <script>
-const total=54;
-let i=1, timer=null;
-const main=document.getElementById('mainImg');
-const thumbs=document.getElementById('thumbs');
-for(let k=1;k<=total;k++){
-  const t=document.createElement('img');
-  t.src=`./images/img${String(k).padStart(2,'0')}.jpg`;
-  t.onclick=()=>show(k);
+const total = 54;
+let i = total;   // start from last image
+let timer = null;
+
+const main = document.getElementById('mainImg');
+const thumbs = document.getElementById('thumbs');
+
+// Create thumbnails in reverse order
+for(let k = total; k >= 1; k--){
+  const t = document.createElement('img');
+  t.src = `./images/img${String(k).padStart(2,'0')}.jpg`;
+  t.onclick = () => show(k);
   thumbs.appendChild(t);
 }
-function show(n){i=n;main.classList.add('fade');main.src=`./images/img${String(i).padStart(2,'0')}.jpg`;setTimeout(()=>main.classList.remove('fade'),1000);
-Array.from(thumbs.children).forEach((c,idx)=>c.classList.toggle('active',idx+1===i));}
-function next(){show(i%total+1);}function prev(){show((i-2+total)%total+1);}function togglePlay(){if(timer){clearInterval(timer);timer=null;document.getElementById('playBtn').textContent='▶ Play';}else{timer=setInterval(next,3000);document.getElementById('playBtn').textContent='⏸ Pause';}}
-show(1);
+
+function show(n){
+  i = n;
+
+  main.classList.remove("zoom");
+  void main.offsetWidth;
+  main.classList.add("zoom");
+
+  main.src = `./images/img${String(i).padStart(2,'0')}.jpg`;
+
+  Array.from(thumbs.children).forEach((c) => {
+    const thumbNum = parseInt(c.src.match(/img(\d+)\.jpg$/)[1]);
+    c.classList.toggle('active', thumbNum === i);
+  });
+
+  centerActiveThumbnail();
+}
+
+// Reverse slideshow direction (54 → 53 → 52…)
+function next(){
+  show((i - 2 + total) % total + 1);
+}
+
+function prev(){
+  show(i % total + 1);
+}
+
+function togglePlay(){
+  if(timer){
+    clearInterval(timer);
+    timer = null;
+    document.getElementById('playBtn').textContent='▶ Play';
+  } else {
+    timer = setInterval(next,3000);
+    document.getElementById('playBtn').textContent='⏸ Pause';
+  }
+}
+
 function toggleFullscreen(){
   const el = document.documentElement;
-  if (!document.fullscreenElement) {
+  if(!document.fullscreenElement){
     el.requestFullscreen().catch(()=>{});
     document.getElementById('fsBtn').textContent='⤢ Exit full screen';
   } else {
@@ -67,4 +196,25 @@ function toggleFullscreen(){
     document.getElementById('fsBtn').textContent='⛶ Full screen';
   }
 }
+
+function centerActiveThumbnail(){
+  const active = thumbs.querySelector(".active");
+  if(!active) return;
+
+  if(thumbs.scrollWidth <= thumbs.clientWidth) return;
+
+  const scrollTo =
+    active.offsetLeft - (thumbs.clientWidth / 2) + (active.clientWidth / 2);
+
+  thumbs.scrollTo({
+    left: scrollTo,
+    behavior: "smooth"
+  });
+}
+
+// Load last image first
+show(total);
 </script>
+
+</body>
+</html>
