@@ -20,6 +20,7 @@ h1{margin:15px 0;}
   display:inline-block;
   width:100%;
   text-align:center;
+   touch-action: pan-y;
 }
 
 #viewer img{
@@ -214,6 +215,44 @@ function centerActiveThumbnail(){
 
 // Load last image first
 show(total);
+
+/* =========================
+   Mobile Swipe Support
+   ========================= */
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+const viewer = document.getElementById("viewer");
+
+function handleGesture() {
+  const swipeThreshold = 50; // minimum px distance
+
+  if (touchEndX < touchStartX - swipeThreshold) {
+    // Swipe left → Next image
+    next();
+  }
+
+  if (touchEndX > touchStartX + swipeThreshold) {
+    // Swipe right → Previous image
+    prev();
+  }
+}
+
+// Enable only on touch devices (mobile)
+if ("ontouchstart" in window) {
+
+  viewer.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  viewer.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+  });
+
+}
+
 </script>
 
 </body>
