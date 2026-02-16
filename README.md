@@ -26,6 +26,7 @@ https://rn-ksheer.github.io/vu2rms_cartoons/
 - ▶ Auto-play slideshow mode
 - 🖼 Thumbnail preview navigation
 - 📱 Fully mobile responsive
+- 👉 Swipe left / right navigation on mobile
 - ⛶ Full-screen viewing support
 
 ---
