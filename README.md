@@ -4,7 +4,7 @@
 ![Updates](https://img.shields.io/badge/Weekly%20Updates-Active-blue?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Online-success?style=for-the-badge)
 
-A weekly updated cartoon gallery maintained by **VU2RMS**.
+A weekly updated cartoon gallery maintained by **VU2CQM**.
 
 🎨 Amateur radio themed cartoons  
 📻 Creative ham humour  
