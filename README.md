@@ -1,4 +1,4 @@
-# 📡 HamToons by VU2RMS – Weekly Update
+# 📡 HamToons by VU2RMS – Updated Weekly
 
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-brightgreen?style=for-the-badge&logo=github)
 ![Updates](https://img.shields.io/badge/Weekly%20Updates-Active-blue?style=for-the-badge)
