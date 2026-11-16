@@ -66,4 +66,4 @@ The gallery automatically displays the latest image first.
 
 ---
 
-📡 73 de VU25**RadioKilowatt** (old-VU3C-Q-Mike)
+📡 73 de VU25**RadioKilowatt** (old-VU3CQ-Mike)
